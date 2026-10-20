@@ -1,0 +1,9 @@
+.cache/
+build/
+build-linux.tar.gz
+build-win/
+build-win.zip
+.direnv/
+.clangd
+.envrc
+compile_commands.json
