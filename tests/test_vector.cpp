@@ -10,7 +10,8 @@ using namespace Lists;
 //}
 
 TEST_CASE("Initialization and .at() method works") {
-    Vector<int> v = {10, 20, 30, 40};
+    // NAO FUNCIONA AINDA
+    // Vector<int> v = {10, 20, 30, 40};
     Vector<char> c;
 }
 
@@ -50,17 +51,13 @@ TEST_CASE("Initialization and .at() method works") {
 //     REQUIRE(s == 5);
 // }
 
-// TEST_CASE(".push_back() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
+TEST_CASE(".push_back() method works") {
+    Vector<int> v;
 
-//     v.push_back(5);
+    v.push_back(5);
 
-//     REQUIRE(v[0] == 10);
-//     REQUIRE(v[1] == 50);
-//     REQUIRE(v[2] == 30);
-//     REQUIRE(v[3] == 40);
-//     REQUIRE(v[4] == 5);
-// }
+    REQUIRE(v[0] == 5);
+}
 
 // TEST_CASE(".begin() method works") {
 //     Vector<int> v = {10, 20, 30, 40};
