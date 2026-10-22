@@ -59,27 +59,76 @@ TEST_CASE(".push_back() method works") {
     REQUIRE(v[0] == 5);
 }
 
-// TEST_CASE(".begin() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
+TEST_CASE(".size() method works") {
+    Vector<int> v;
 
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(40);
 
-//     REQUIRE(v.begin() == );
-// }
+    REQUIRE(v[0] == 10);
+    REQUIRE(v[1] == 20);
+    REQUIRE(v[2] == 30);
+    REQUIRE(v[3] == 40);
 
-// TEST_CASE(".end() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
+    REQUIRE(v.size() == 4);
+}
 
+TEST_CASE(".begin() method works") {
+     Vector<int> v;
 
-//     REQUIRE(v.end() == );
-// }
+     v.push_back(10);
+     v.push_back(20);
+     v.push_back(30);
+     v.push_back(40);
 
-// TEST_CASE(".empty() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
-//     Vector<char> c;
+     REQUIRE(v[0] == 10);
+     REQUIRE(v[1] == 20);
+     REQUIRE(v[2] == 30);
+     REQUIRE(v[3] == 40);
 
-//     REQUIRE(v.empty() == false);
-//     REQUIRE(c.empty() == true);
-// }
+     std::cout << *v.begin();
+     REQUIRE(*v.begin() == 10);
+}
+
+TEST_CASE(".end() method works") {
+    Vector<int> v;
+
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(40);
+
+    REQUIRE(v[0] == 10);
+    REQUIRE(v[1] == 20);
+    REQUIRE(v[2] == 30);
+    REQUIRE(v[3] == 40);
+
+    std::cout << *v.end();
+    REQUIRE(v.size() == 4);
+    REQUIRE(*v.end() == 40);
+}
+
+TEST_CASE(".begin() and .end() on empty vector is defined") {
+    Vector<int> v;
+
+    REQUIRE(v.begin() == v.end());
+}
+
+TEST_CASE(".empty() method works") {
+    //Vector<int> v = {10, 20, 30, 40};
+    Vector<int> v;
+
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(40);
+    Vector<char> c;
+
+    REQUIRE(v.empty() == false);
+    REQUIRE(c.empty() == true);
+}
 
 // TEST_CASE(".insert() method works") {
 //     Vector<int> v = {10, 20, 30, 40};
@@ -93,27 +142,38 @@ TEST_CASE(".push_back() method works") {
 //     REQUIRE(v[3] == 40);
 // }
 
-// TEST_CASE(".pop_back() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
+TEST_CASE(".pop_back() method works") {
+    Vector<int> v;
 
-//     int initial_size = v.size();
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(40);
 
-//     v.pop_back();
+    size_t initial_size = v.size();
 
-//     int final_size = v.size();
+    int tmp = v.pop_back();
 
-//     REQUIRE(initial_size == final_size + 1);
-// }
+    size_t final_size = v.size();
 
-// TEST_CASE(".erase() method works") {
-//     Vector<int> v = {10, 20, 30, 40};
+    REQUIRE(initial_size == final_size + 1);
+    REQUIRE(tmp == 40);
+}
 
-//     v.erase(3);
+TEST_CASE(".erase() method works") {
+    Vector<int> v;
 
-//     REQUIRE(v[0] == 10);
-//     REQUIRE(v[1] == 20);
-//     REQUIRE(v[2] == 40);
-// }
+    v.push_back(10);
+    v.push_back(20);
+    v.push_back(30);
+    v.push_back(40);
+
+    v.erase(2);
+
+    REQUIRE(v[0] == 10);
+    REQUIRE(v[1] == 20);
+    REQUIRE(v[2] == 40);
+}
 
 // TEST_CASE("Range based loops are working") {
 //     Vector<int> v = {10, 20, 30, 40};

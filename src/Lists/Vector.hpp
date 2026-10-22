@@ -19,6 +19,8 @@
 
 #include <initializer_list>
 #include <iterator>
+#include <memory>
+
 
 namespace Lists
 {
@@ -29,7 +31,7 @@ namespace Lists
             Vector()
             {
                 this->head = nullptr;
-                this->size = 0;
+                this->len = 0;
                 this->capacity = 0;
             }
 
@@ -49,21 +51,90 @@ namespace Lists
                 return head[index];
             }
 
+            T* begin()
+            {
+                return head;
+            }
+
+            T* end()
+            {
+                return head + (this->len ? this->len-1 : this->len);
+            }
+
+            std::size_t size()
+            {
+                return this->len;
+            }
+
+            bool empty()
+            {
+                return this->head == nullptr;
+            }
+
+            //T* insert(const_iterator pos, const T& value);
+            //T* insert(const_iterator pos, T&& value);
+            //T* insert(const_iterator pos,
+            //              size_type count, const T& value);
+
             void push_back(T e)
             {
-                if (this->size + 1 <= this->capacity)
+                if (this->len < this->capacity)
                 {
-                    this->head[++this->size] = e;
-                    this->capacity++;
+                    this->head[this->len++] = e;
                     return;
                 }
 
-                auto temp = new T[++this->capacity];
+                // Capacidade vai dobrar sempre que estourar para evitar muitas realocações
+                size_t new_capacity = this->capacity ? this->capacity * 2 : 1;
+
+                // unique pointer pra se der throw em algum lugar do codigo abaix
+                // (alocacao de memoria, copiar valor de um vetor para o outro) quando
+                // a variavel perder a referencia ele ja faz o delete automatico
+                std::unique_ptr<T[]> temp(new T[new_capacity]);
+
+                for (size_t i = 0; i < this->len; ++i)
+                {
+                    temp[i] = this->head[i];
+                }
+
+                delete[] this->head;
+                // transfere a ownership do vetor pra head (ate parece rust :P)
+                this->head     = temp.release();
+                this->capacity = new_capacity;
+
+                this->head[this->len++] = e;
             }
 
+            T pop_back()
+            {
+                // ISSO NAO EH SEGURO, E SE len=0?
+                return this->head[--this->len];
+            }
+
+            void erase(size_t idx)
+            {
+                if (idx == (this->len ? this->len-1 : this->len))
+                {
+                    this->pop_back();
+                    return;
+                }
+
+                for (size_t i = 0; i < this->len; i++)
+                {
+                    if (i == idx)
+                    {
+                        // isso eh seguro ja que o if acima cobre o
+                        // caso de ser o ultimo elemento a ser retirado
+                        this->head[i] = this->head[++i];
+                        continue;
+                    }
+                    this->head[i] = this->head[i];
+                }
+                this->len--;
+            }
         private:
             T *head;
-            std::size_t size, capacity;
+            std::size_t len, capacity;
     };
 }
 
